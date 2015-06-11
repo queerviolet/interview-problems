@@ -68,23 +68,51 @@ describe :max_slice do
   end
 end
 
-# O(1) -- looking up in an array by index, hash insertion / deletion
-# O(n) -- each, map, reduce
+# -- Big-O primer --
+#
+# O(1) — constant time
+#   takes the same amount of time no matter how large the input set.
+#   no loops, just math & memory operations
+#   looking up in an array by index is O(1): load(start_of_array + index)
+#   hash insertion is O(1): store(value, start_of_array + hash(key)), where
+#     hash(key) is some O(1) function (handwave collisions).
+# O(n) — linear time
+#   do an O(1) thing to each thing: each, map, reduce, min, max on
+#   an unstructured array
+# O(log_2 n) — logarithmic time
+#   when you see log_2, you're working on a problem where you can eliminate
+#   half your dataset with each step. Often seen with binary tree operations.
+#   lookup / insertion into a binary tree, binary search, binary heap insertion
+# O(n^2) — polynomial time
+#   compare each to each (find all pairs in an unstructured array)
+#   for a in ary:
+#     for b in ary:
+#       do some O(1) thing
+# O(n^k) — still polynomial time, but worse as k grows
+#   More nested loops.
+# O(n * log_2 n)
+#   sorting. Note that heap insertion is O(log_2 n), and so putting everything
+#   into a heap and taking it all out again is O(n * log_2 n), and indeed,
+#   that algorithm is called heap sort.
+# O(2^n)
+#   all subsets of n things
+# O(n!)
+#   exhaustive searches over all permutations.
+#   There are 9! tic tac toe games; that's 362,880, making it one of the
+#   few common games for which you can exhaustively search all possible
+#   moves and their consequences.
 
-# O(log n) -- lookup / insertion into a binary tree
-
-# O(n^2) -- compare each to each
-# O(n log n)
-# O(2^n) -- look at every possible subset of a set of things
-
-# This is O(n^3)
-def max_slice_expensive(ary)
+# max_slice_exhaustive(ary: []Number) -> []Number
+#
+# Return the slice of ary with the largest sum by exhaustively
+# searching all valid slices. This one is O(n^3).
+def max_slice_exhaustive(ary)
   best_slice = nil
   best_sum = -Float::INFINITY
-  ary.length.times do |start_index| # N
-    (start_index..ary.length - 1).each do |end_index| # * N
+  ary.length.times do |start_index| # O(n)
+    (start_index..ary.length - 1).each do |end_index| # * O(n)
       slice = ary[start_index..end_index]
-      sum = slice.inject(:+) # * N
+      sum = slice.inject(:+) # * O(n)
       if sum > best_sum
         best_slice = slice
         best_sum = sum
@@ -94,13 +122,18 @@ def max_slice_expensive(ary)
   best_slice
 end
 
-# Walk the array exactly once, keeping track of a cumulative
+# max_slice(ary: []Number) -> []Number
+#
+# Return the slice of ary with the largest sum. Considers only
+# n slices, but it turns out that's enough.
+#
+# We walk the array exactly once, keeping track of a cumulative
 # sum from an arbitrary start index (initially zero). Keep track
 # of the best slice (highest cumulative sum) ever seen, and
 # reset the current start index and zero the current sum any time
 # the latter dips below zero.
 #
-# O(n)
+# This makes one pass over the array—it's O(n).
 def max_slice(ary)
   best_start = 0
   best_end = -1
