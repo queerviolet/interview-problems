@@ -97,7 +97,8 @@ end
 # Walk the array exactly once, keeping track of a cumulative
 # sum from an arbitrary start index (initially zero). Keep track
 # of the best slice (highest cumulative sum) ever seen, and
-# reset the start index and sum any time it dips below zero.
+# reset the current start index and zero the current sum any time
+# the latter dips below zero.
 #
 # O(n)
 def max_slice(ary)
