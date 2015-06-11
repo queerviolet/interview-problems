@@ -90,7 +90,7 @@ end
 # to keep track of it in our stack frame.
 #
 # Our stack frame also needs to keep track of where we are in the
-# method body call:
+# method:
 #
 #   1. have we just entered it? (lines 63-64)
 #   2. are we waiting for the left recursive call (line 65)?
@@ -100,8 +100,8 @@ end
 #
 # We'll just use a hash of {index, node, state} to store our stack frame.
 #
-# The equivalent of making a method call is constructing a new stack frame
-# hash and pushing it onto the stack.
+# The equivalent of making a method call will be constructing a new stack
+# frame hash and pushing it onto the stack.
 #
 # The equivalent of returning from a method call is putting our return
 # value into a variable (our equivalen of a return register) and popping
@@ -110,7 +110,8 @@ end
 # The whole machine is driven by a loop which processes the topmost frame
 # on the stack until there are no more frames on the stack.
 def iterative_binary_tree(ary)
-  # Start by pushing (index=0) onto the stack.
+  # Start by pushing (index=0) onto the stack. This is our topmost
+  # method call.
   stack = [{index: 0}]
 
   # Ret is where return values go (the return register)
