@@ -126,7 +126,7 @@ def iterative_binary_tree(ary)
       if ary[index] == nil             # build_binary_tree:63
         ret = nil; stack.pop()         # build_binary_tree:63 (return nil)
       else
-        frame[:node] = {value: ary[frame[:index]]} # build_binary_tree:64
+        frame[:node] = {value: ary[index]} # build_binary_tree:64
         frame[:state] = :left
         call = {index: index * 2 + 1}
         stack.push(call)               # build_binary_tree:65 (recursive call)
@@ -135,7 +135,7 @@ def iterative_binary_tree(ary)
     when :left
       frame[:node][:left] = ret        # build_binary_tree:65 (assignment)
       frame[:state] = :right
-      call = {index: frame[:index] * 2 + 2} 
+      call = {index: index * 2 + 2} 
       stack.push(call)                 # build_binary_tree:66 (recursive call)
 
     when :right
