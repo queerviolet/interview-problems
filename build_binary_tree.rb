@@ -133,7 +133,7 @@ def iterative_binary_tree(ary)
       end
     
     when :left
-      frame[:node][:left] = ret # build_binary_tree:65 (assignment)
+      frame[:node][:left] = ret        # build_binary_tree:65 (assignment)
       frame[:state] = :right
       call = {index: frame[:index] * 2 + 2} 
       stack.push(call)                 # build_binary_tree:66 (recursive call)
