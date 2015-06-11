@@ -77,7 +77,7 @@ end
 # This is naïve approach to converting the recursive function above
 # into an iterative function. It's not naïve in the sense that it's
 # very simple and readable, but rather in that it's a very mechanical
-# c
+# process that even a robot could do. (Robots do, in fact, do this.)
 #
 # Here's how we'll convert our function:
 #
@@ -100,11 +100,15 @@ end
 #
 # We'll just use a hash of {index, node, state} to store our stack frame.
 #
-# The equivalent of making a method call is constructing a new StackFrame
-# with the arguments we want and pushing it onto a stack.
+# The equivalent of making a method call is constructing a new stack frame
+# hash and pushing it onto the stack.
 #
 # The equivalent of returning from a method call is putting our return
-# value into ret and popping the stack.
+# value into a variable (our equivalen of a return register) and popping
+# the stack.
+#
+# The whole machine is driven by a loop which processes the topmost frame
+# on the stack until there are no more frames on the stack.
 def iterative_binary_tree(ary)
   # Start by pushing (index=0) onto the stack.
   stack = [{index: 0}]
