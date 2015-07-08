@@ -118,7 +118,7 @@ function mrca(root, leda, castor) {
     }
     ancestor = current;
   }
-  // infinite loop is guaranteed to terminate at line 112, given
+  // infinite loop is guaranteed to terminate at line 115, given
   // arrays of finite length.
 }
 
